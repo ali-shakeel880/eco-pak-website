@@ -17,15 +17,8 @@ export default function CEOMessage() {
         {/* CEO Photo and Info */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div className="relative w-56 h-64 mx-auto mb-8 group">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl transform rotate-3 group-hover:rotate-6 transition-transform duration-300 shadow-xl"></div>
-              <div className="absolute inset-0 bg-white rounded-2xl overflow-hidden border-4 border-white shadow-lg">
-                <img 
-                  src="/Mr%20Kashif%20Chaudhary.jpeg" 
-                  alt="Mr Kashif Chaudhary" 
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
+            <div className="w-40 h-40 bg-gradient-to-br from-green-400 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+              <Users className="w-20 h-20 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">Mr Kashif Chaudhary</h3>
             <p className="text-green-600 font-semibold text-lg">Eco Pak Services</p>
@@ -46,9 +39,9 @@ export default function CEOMessage() {
               <p className="text-xl leading-relaxed mb-6 text-gray-700">
                 Dear Valued Partners and Stakeholders,
               </p>
-              
+
               <p className="text-lg leading-relaxed mb-6 text-gray-700">
-                Welcome to <strong className="text-green-600">Eco Pak Services</strong>, where environmental excellence meets innovative solutions. As the Chief Executive Officer, I am immensely proud to lead an organization that has been at the forefront of environmental protection and sustainability since our establishment in 2016.
+                Welcome to <strong className="text-green-600">Eco Pak Services</strong>, where environmental excellence meets innovative solutions. As the Chief Executive Officer, I am immensely proud to lead an organization that has been at the forefront of environmental protection and sustainability since our establishment in 2025.
               </p>
 
               <p className="text-lg leading-relaxed mb-6 text-gray-700">
@@ -72,64 +65,64 @@ export default function CEOMessage() {
       </div>
 
       {/* Our Services Overview */}
-    {/* Our Services Overview */}
-<div className="mb-16">
-  <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Our Comprehensive Services</h2>
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {[
-      {
-        title: "Environmental Laboratory Services",
-        description: "Advanced testing and analysis services through our established research institute, providing accurate environmental assessments and monitoring.",
-        icon: <Shield className="w-8 h-8 text-green-600" />,
-        link: "/services/environmental-laboratory"
-      },
-      {
-        title: "Environmental Consultancy",
-        description: "Expert guidance on legal requirements and procedures for environmental studies, ensuring full compliance with Environmental Protection Act 1997.",
-        icon: <Users className="w-8 h-8 text-blue-600" />,
-        link: "/services/environmental-consultancy"
-      },
-      {
-        title: "Techno Legal Services",
-        description: "Specialized independent services covering all aspects of compliance with local and international environmental regulations.",
-        icon: <Award className="w-8 h-8 text-green-600" />,
-        link: "/services/techno-legal"
-      },
-      {
-        title: "Research Institute",
-        description: "Dedicated research and development facility focused on sustainable solutions and environmental innovation since 2016.",
-        icon: <Target className="w-8 h-8 text-blue-600" />,
-        link: "/services/research-institute"
-      },
-      {
-        title: "Treatment & Design Services",
-        description: "Advanced wastewater treatment facility design with our experienced scientists and engineers, covering various capacities and technologies.",
-        icon: <Recycle className="w-8 h-8 text-green-600" />,
-        link: "/services/design-treatment"
-      },
-      {
-        title: "Carbon Footprint Assessment",
-        description: "Comprehensive cradle-to-grave carbon footprint measurement covering development, production, distribution, and disposal phases.",
-        icon: <Leaf className="w-8 h-8 text-blue-600" />,
-        link: "/services/carbon-footprint"
-      }
-    ].map((service, index) => (
-      <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-        <div className="flex items-center mb-4">
-          {service.icon}
-          <h3 className="text-xl font-semibold text-gray-800 ml-3">{service.title}</h3>
+      {/* Our Services Overview */}
+      <div className="mb-16">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Our Comprehensive Services</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            {
+              title: "Environmental Laboratory Services",
+              description: "Advanced testing and analysis services through our established research institute, providing accurate environmental assessments and monitoring.",
+              icon: <Shield className="w-8 h-8 text-green-600" />,
+              link: "/services/environmental-laboratory"
+            },
+            {
+              title: "Environmental Consultancy",
+              description: "Expert guidance on legal requirements and procedures for environmental studies, ensuring full compliance with Environmental Protection Act 1997.",
+              icon: <Users className="w-8 h-8 text-blue-600" />,
+              link: "/services/environmental-consultancy"
+            },
+            {
+              title: "Techno Legal Services",
+              description: "Specialized independent services covering all aspects of compliance with local and international environmental regulations.",
+              icon: <Award className="w-8 h-8 text-green-600" />,
+              link: "/services/techno-legal"
+            },
+            {
+              title: "Research Institute",
+              description: "Dedicated research and development facility focused on sustainable solutions and environmental innovation since 2025.",
+              icon: <Target className="w-8 h-8 text-blue-600" />,
+              link: "/services/research-institute"
+            },
+            {
+              title: "Treatment & Design Services",
+              description: "Advanced wastewater treatment facility design with our experienced scientists and engineers, covering various capacities and technologies.",
+              icon: <Recycle className="w-8 h-8 text-green-600" />,
+              link: "/services/design-treatment"
+            },
+            {
+              title: "Carbon Footprint Assessment",
+              description: "Comprehensive cradle-to-grave carbon footprint measurement covering development, production, distribution, and disposal phases.",
+              icon: <Leaf className="w-8 h-8 text-blue-600" />,
+              link: "/services/carbon-footprint"
+            }
+          ].map((service, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+              <div className="flex items-center mb-4">
+                {service.icon}
+                <h3 className="text-xl font-semibold text-gray-800 ml-3">{service.title}</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">{service.description}</p>
+              <Link
+                to={service.link}
+                className="mt-4 inline-block text-green-600 font-semibold hover:text-green-700 transition-colors duration-200"
+              >
+                Learn More →
+              </Link>
+            </div>
+          ))}
         </div>
-        <p className="text-gray-600 leading-relaxed">{service.description}</p>
-        <Link
-          to={service.link}
-          className="mt-4 inline-block text-green-600 font-semibold hover:text-green-700 transition-colors duration-200"
-        >
-          Learn More →
-        </Link>
       </div>
-    ))}
-  </div>
-</div>
 
 
       {/* Vision, Mission & Values */}
@@ -190,7 +183,7 @@ export default function CEOMessage() {
         </div>
       </div>
 
-     
+
     </div>
   );
 }

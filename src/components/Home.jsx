@@ -39,7 +39,7 @@ export default function Home() {
     {
       icon: <Beaker className="w-12 h-12" />,
       title: "Environmental Laboratory Services",
-      description: "Eco Pak Services Research Institute had been established in 2016 under the section 42, Therefore the purpose of establishment was Research and development for sustainability…",
+      description: "Eco Pak Services Research Institute had been established in 2025 under the section 42, Therefore the purpose of establishment was Research and development for sustainability…",
       image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
       link: "/services/environmental-laboratory"
     },
@@ -60,7 +60,7 @@ export default function Home() {
     {
       icon: <Globe className="w-12 h-12" />,
       title: "Research Institute",
-      description: "Eco Pak Services  Research Institute had been established in 2016 under the section 42, There for the purpose of establishment was Research and development for the sustainable…",
+      description: "Eco Pak Services  Research Institute had been established in 2025 under the section 42, There for the purpose of establishment was Research and development for the sustainable…",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
       link: "/services/research-institute"
     },

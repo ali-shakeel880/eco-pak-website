@@ -81,7 +81,7 @@ export default function ResearchInstitute() {
             <div>
               <h1 className="text-5xl font-bold mb-6">Eco Pak Research Institute</h1>
               <p className="text-xl text-green-100 mb-6">
-                Established in 2016 under Section 42, the Eco Pak Research Institute stands as Pakistan's 
+                Established in 2025 under Section 42, the Eco Pak Research Institute stands as Pakistan's 
                 premier environmental research facility, dedicated to sustainable development and innovative 
                 solutions for our nation's environmental challenges.
               </p>
@@ -100,7 +100,7 @@ export default function ResearchInstitute() {
               <div className="space-y-4">
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-green-300 mr-3" />
-                  <span>Established research facility since 2016</span>
+                  <span>Established research facility since 2025</span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-green-300 mr-3" />
@@ -227,7 +227,7 @@ export default function ResearchInstitute() {
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Research Impact</h2>
-          <p className="text-xl text-gray-600">Making a difference through environmental research since 2016</p>
+          <p className="text-xl text-gray-600">Making a difference through environmental research since 2025</p>
         </div>
 
         <div className="grid md:grid-cols-4 gap-8">
