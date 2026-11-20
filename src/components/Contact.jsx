@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { trackEvent } from '../seo/analytics.js';
 import { ChevronDown, Phone, Mail, Facebook, Linkedin, Instagram, Send, CheckCircle, AlertCircle, MapPin, Clock } from 'lucide-react';
 
 export default function Contact() {
@@ -98,6 +99,7 @@ export default function Contact() {
 
       console.log('Email sent successfully:', result);
       setStatus('success');
+      trackEvent('generate_lead', { form: 'contact', recipient: formData.recipient });
       
       // Reset form
       setFormData({
@@ -122,13 +124,15 @@ export default function Contact() {
       icon: Phone,
       label: 'Phone Numbers',
       items: ['+92 300 1050996', '+92 300 1050977'],
-      action: (item) => window.open(`tel:${item}`)
+      href: (item) => `tel:${item.replace(/\s/g, '')}`,
+      event: 'phone_click'
     },
     {
       icon: Mail,
       label: 'Email Addresses',
       items: ['ceo@ecopakservices.com', 'info@ecopakservices.com','director@ecopakservices.com'],
-      action: (item) => window.open(`mailto:${item}`)
+      href: (item) => `mailto:${item}`,
+      event: 'email_click'
     }
   ];
 
@@ -158,13 +162,14 @@ export default function Contact() {
                 </div>
                 <div className="space-y-2">
                   {contact.items.map((item, itemIndex) => (
-                    <button
+                    <a
                       key={itemIndex}
-                      onClick={() => contact.action(item)}
-                      className="block w-full text-left text-gray-600 hover:text-green-600 hover:bg-green-50 p-2 rounded-lg transition-all duration-200"
+                      href={contact.href(item)}
+                      onClick={() => trackEvent(contact.event, { location: 'contact_page' })}
+                      className="block w-full text-left text-gray-600 hover:text-green-600 hover:bg-green-50 p-2 rounded-lg transition-all duration-200 break-all"
                     >
                       {item}
-                    </button>
+                    </a>
                   ))}
                 </div>
               </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { trackEvent } from '../seo/analytics.js';
 
 const WhatsAppButton = () => {
   // Phone numbers with priority (only 2 numbers as requested)
@@ -18,6 +19,20 @@ const WhatsAppButton = () => {
   ];
 
   const [showOptions, setShowOptions] = useState(false);
+  const rootRef = useRef(null);
+
+  // Close the options popup on outside tap/click or Escape.
+  useEffect(() => {
+    if (!showOptions) return undefined;
+    const onDown = (e) => rootRef.current && !rootRef.current.contains(e.target) && setShowOptions(false);
+    const onKey = (e) => e.key === 'Escape' && setShowOptions(false);
+    document.addEventListener('pointerdown', onDown);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [showOptions]);
   
   // Sort by priority (lowest number = highest priority)
   const sortedNumbers = phoneNumbers.sort((a, b) => a.priority - b.priority);
@@ -25,7 +40,8 @@ const WhatsAppButton = () => {
   const handleWhatsAppClick = (phoneData) => {
     const encodedMessage = encodeURIComponent(phoneData.message);
     const whatsappUrl = `https://wa.me/${phoneData.number}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    trackEvent('whatsapp_click', { location: 'floating_button' });
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     setShowOptions(false);
   };
 
@@ -35,22 +51,23 @@ const WhatsAppButton = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div ref={rootRef} className="whatsapp-fab fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       {/* Options menu */}
       {showOptions && (
-        <div className="absolute bottom-20 right-0 bg-white rounded-lg shadow-lg border border-gray-200 p-2 min-w-48">
+        <div role="menu" className="absolute bottom-full mb-3 right-0 bg-white rounded-lg shadow-lg border border-gray-200 p-2 w-56 max-w-[calc(100vw-2rem)]">
           <div className="text-sm font-medium text-gray-700 px-3 py-2 border-b border-gray-100">
             Choose Contact Method
           </div>
-          {sortedNumbers.map((phoneData, index) => (
+          {sortedNumbers.map((phoneData) => (
             <button
               key={phoneData.number}
+              role="menuitem"
               onClick={() => handleWhatsAppClick(phoneData)}
               className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-green-50 rounded flex items-center justify-between transition-colors duration-200"
             >
               <div>
                 <div className="font-medium">{phoneData.label}</div>
-                <div className="text-xs text-gray-500">+{phoneData.number}</div>
+                <div className="text-xs text-gray-500">{`+${phoneData.number.slice(0, 2)} ${phoneData.number.slice(2, 5)} ${phoneData.number.slice(5)}`}</div>
               </div>
               {phoneData.priority === 1 && (
                 <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
@@ -70,14 +87,21 @@ const WhatsAppButton = () => {
 
       {/* Single WhatsApp button with integrated options */}
       <div className="relative">
+        {!showOptions && (
+          <span className="absolute inset-0 rounded-full bg-green-400 opacity-40 animate-ping motion-reduce:hidden" aria-hidden="true" />
+        )}
         <button
           onClick={handlePrimaryClick}
-          className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-pulse relative group"
+          className="bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 relative group"
           aria-label="Contact us on WhatsApp"
+          aria-haspopup="menu"
+          aria-expanded={showOptions}
         >
           <svg
             width="32"
             height="32"
+            className="w-7 h-7 sm:w-8 sm:h-8"
+            aria-hidden="true"
             viewBox="0 0 24 24"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +117,7 @@ const WhatsAppButton = () => {
           </div>
           
           {/* Long press indicator (appears on hover) */}
-          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-75 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+          <div className="hidden md:block absolute -top-9 right-0 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-75 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
             Click to choose contact
           </div>
         </button>

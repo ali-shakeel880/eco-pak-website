@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Phone, Mail, Menu, X, Leaf } from 'lucide-react';
 import DropdownMenu from './DropdownMenu';
 import { SITE } from '../seo/site.js';
@@ -8,13 +8,38 @@ import { trackEvent } from '../seo/analytics.js';
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openSection, setOpenSection] = useState(null);
+  const { pathname } = useLocation();
+  const closeMenu = () => setIsMenuOpen(false);
+  const mobileLink = 'block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-colors font-medium';
+
+  // Close the mobile menu on navigation.
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
+  // While the mobile menu is open: lock page scroll, close on Escape,
+  // and let other fixed UI (WhatsApp button) know via a body class.
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('mobile-menu-open');
+    const onKey = (e) => e.key === 'Escape' && setIsMenuOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.body.classList.remove('mobile-menu-open');
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isMenuOpen]);
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -71,7 +96,7 @@ export default function Navigation() {
 
       {/* Main Navigation */}
       <nav className={`bg-gradient-to-r from-green-600 via-green-500 to-emerald-500 shadow-lg sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'shadow-xl backdrop-blur-sm' : ''
+        isScrolled ? 'shadow-xl' : ''
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 lg:h-20">
@@ -145,7 +170,9 @@ export default function Navigation() {
             <button
               onClick={toggleMenu}
               className="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-              aria-label="Toggle menu"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -156,92 +183,79 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden bg-green-700 border-t border-green-500">
-            <div className="px-4 py-2 space-y-1">
-              {/* Mobile Contact Info */}
-              <div className="border-b border-green-600 pb-3 mb-3">
-                {SITE.phones.map((p) => (
-                  <a key={p.tel} href={`tel:${p.tel}`} onClick={() => trackEvent('phone_click', { location: 'mobile_menu' })} className="flex items-center space-x-2 text-green-100 text-sm mb-2">
-                    <Phone className="h-4 w-4" aria-hidden="true" />
-                    <span>{p.display}</span>
-                  </a>
-                ))}
-                <a href={`mailto:${SITE.email}`} className="flex items-center space-x-2 text-green-100 text-sm">
-                  <Mail className="h-4 w-4" aria-hidden="true" />
-                  <span>{SITE.email}</span>
+        {/* Mobile Menu: fixed, independently scrollable panel below the header */}
+        <div
+          id="mobile-menu"
+          className={`lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-green-700 border-t border-green-500 overflow-y-auto overscroll-contain transition-opacity duration-200 ${
+            isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+          }`}
+          aria-hidden={!isMenuOpen}
+        >
+          <div className="px-4 pt-3 pb-24 space-y-1">
+            {/* Mobile Contact Info */}
+            <div className="border-b border-green-600 pb-3 mb-2 grid gap-1">
+              {SITE.phones.map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`} tabIndex={isMenuOpen ? 0 : -1} onClick={() => trackEvent('phone_click', { location: 'mobile_menu' })} className="flex items-center gap-2 text-green-100 text-sm py-1.5">
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  <span>{p.display}</span>
                 </a>
-              </div>
-
-              <Link 
-                to="/" 
-                className="block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-all font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                HOME
-              </Link>
-              
-              {/* Mobile About Us Submenu */}
-              <div className="space-y-1">
-                <div className="px-3 py-2 text-white font-medium border-b border-green-600">
-                  ABOUT US
-                </div>
-                {aboutUsItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.to || `/about/${item.path}`}
-                    className="block px-6 py-2 text-green-100 hover:text-white hover:bg-white/10 rounded-lg transition-all text-sm"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Mobile Services Submenu */}
-              <div className="space-y-1">
-                <div className="px-3 py-2 text-white font-medium border-b border-green-600">
-                  SERVICES
-                </div>
-                {servicesItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={`/services/${item.path}`}
-                    className="block px-6 py-2 text-green-100 hover:text-white hover:bg-white/10 rounded-lg transition-all text-sm"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-              
-              <Link 
-                to="/projects" 
-                className="block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-all font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                PROJECTS
-              </Link>
-              
-              <Link 
-                to="/clients" 
-                className="block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-all font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                CLIENTS
-              </Link>
-              
-              <Link 
-                to="/contact" 
-                className="block mx-3 my-3 px-4 py-3 bg-white text-green-600 hover:bg-green-50 rounded-lg transition-all font-semibold text-center shadow-lg"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                CONTACT US
-              </Link>
+              ))}
+              <a href={`mailto:${SITE.email}`} tabIndex={isMenuOpen ? 0 : -1} className="flex items-center gap-2 text-green-100 text-sm py-1.5">
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                <span>{SITE.email}</span>
+              </a>
             </div>
+
+            <Link to="/" tabIndex={isMenuOpen ? 0 : -1} className={mobileLink} onClick={closeMenu}>HOME</Link>
+
+            {[
+              { key: 'about', title: 'ABOUT US', items: aboutUsItems.map((i) => ({ label: i.label, to: i.to || `/about/${i.path}` })) },
+              { key: 'services', title: 'SERVICES', items: servicesItems.map((i) => ({ label: i.label, to: `/services/${i.path}` })) },
+            ].map((group) => {
+              const open = openSection === group.key;
+              return (
+                <div key={group.key}>
+                  <button
+                    type="button"
+                    tabIndex={isMenuOpen ? 0 : -1}
+                    onClick={() => setOpenSection(open ? null : group.key)}
+                    aria-expanded={open}
+                    aria-controls={`mobile-${group.key}`}
+                    className={`${mobileLink} w-full flex items-center justify-between`}
+                  >
+                    {group.title}
+                    <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+                  </button>
+                  <div id={`mobile-${group.key}`} className={`${open ? 'block' : 'hidden'} pb-2`}>
+                    {group.items.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        tabIndex={isMenuOpen && open ? 0 : -1}
+                        className="block ml-3 pl-4 pr-3 py-2.5 border-l border-green-500 text-green-100 hover:text-white hover:bg-white/10 rounded-r-lg transition-colors text-sm"
+                        onClick={closeMenu}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
+            <Link to="/projects" tabIndex={isMenuOpen ? 0 : -1} className={mobileLink} onClick={closeMenu}>PROJECTS</Link>
+            <Link to="/clients" tabIndex={isMenuOpen ? 0 : -1} className={mobileLink} onClick={closeMenu}>CLIENTS</Link>
+
+            <Link
+              to="/contact"
+              tabIndex={isMenuOpen ? 0 : -1}
+              className="block mt-4 px-4 py-3 bg-white text-green-700 hover:bg-green-50 rounded-lg transition-colors font-semibold text-center shadow-lg"
+              onClick={closeMenu}
+            >
+              CONTACT US
+            </Link>
           </div>
-        )}
+        </div>
       </nav>
     </>
   );

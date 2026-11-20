@@ -39,3 +39,19 @@
           animation: float-reverse 6s ease-in-out infinite;
         }
    
+/* ---- UI/UX fixes ---- */
+/* Anchor links (#services etc.) land below the sticky header */
+html { scroll-padding-top: 5.5rem; }
+/* Hide the floating WhatsApp button while the full-screen mobile menu is open */
+body.mobile-menu-open .whatsapp-fab { display: none; }
+/* Remove the grey flash on tap in mobile browsers */
+a, button, summary { -webkit-tap-highlight-color: transparent; }
+/* Visible keyboard focus everywhere */
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+}
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

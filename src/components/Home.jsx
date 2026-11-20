@@ -397,20 +397,19 @@ export default function Home() {
       `}</style>
 
       {/* Enhanced Hero Section */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-[100svh] overflow-hidden">
         {/* Background Images */}
         <div className="absolute inset-0">
           {slides.map((slide, index) => (
             <div
               key={index}
-              className={`absolute inset-0 hero-bg-image ${
+              className={`absolute inset-0 hero-bg-image lg:bg-fixed ${
                 index === currentSlide ? 'active' : 'inactive'
               }`}
               style={{
                 backgroundImage: `url(${slide.image})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed'
+                backgroundPosition: 'center'
               }}
             />
           ))}
@@ -420,10 +419,10 @@ export default function Home() {
         <div className="absolute inset-0 hero-overlay"></div>
         
         {/* Main Content */}
-        <div className="relative z-20 min-h-screen flex items-center justify-center">
-          <div className="max-w-6xl mx-auto px-6 text-center">
+        <div className="relative z-20 min-h-[100svh] flex items-center justify-center">
+          <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-10 pb-24 sm:pb-28 text-center">
             {/* Company Badge - Always visible */}
-            <div className="text-white mb-8">
+            <div className="text-white mb-6 sm:mb-8">
               <div className="inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 glass-effect animate-zoomIn">
                 <Leaf className="w-5 h-5 text-green-400 mr-2" />
                 <span className="text-sm font-medium text-white/90">Environmental Excellence Since 2015</span>
@@ -437,7 +436,7 @@ export default function Home() {
             <div className={`slide-content-wrapper ${isSlideChanging ? 'slide-changing' : 'slide-active'}`}>
               <div className="text-white">
                 {/* Main Title */}
-                <p className="text-5xl md:text-7xl font-bold mb-4 text-shadow leading-tight animate-slideInFromTop">
+                <p className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 text-shadow leading-tight animate-slideInFromTop">
                   {slides[currentSlide].title}
                 </p>
                 
@@ -447,7 +446,7 @@ export default function Home() {
                 </p>
                 
                 {/* Description */}
-                <p className="text-lg md:text-xl mb-10 opacity-90 max-w-4xl mx-auto leading-relaxed text-white/90 animate-slideInFromRight" style={{ animationDelay: '0.4s' }}>
+                <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-10 opacity-90 max-w-4xl mx-auto leading-relaxed text-white/90 animate-slideInFromRight" style={{ animationDelay: '0.4s' }}>
                   {slides[currentSlide].description}
                 </p>
               </div>
@@ -457,10 +456,10 @@ export default function Home() {
             <div className="text-white">
               {/* CTA Button - Always visible and active */}
           
-  <div className="flex justify-center mb-12">
+  <div className="flex justify-center mb-8 sm:mb-12">
     <Link
       to="/contact"
-      className="group inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 animate-glow hover:shadow-2xl cursor-pointer z-30 relative"
+      className="group inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-7 sm:px-10 py-3.5 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 animate-glow hover:shadow-2xl cursor-pointer z-30 relative"
     >
       <Phone className="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" />
       Contact Us Today
@@ -471,7 +470,7 @@ export default function Home() {
 
               
               {/* Trust Indicators */}
-              <div className="flex flex-wrap justify-center items-center gap-8 text-white/70">
+              <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 sm:gap-8 text-white/80">
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-green-400 mr-2" />
                   <span className="text-sm">ISO Certified</span>
@@ -490,13 +489,14 @@ export default function Home() {
         </div>
         
         {/* Enhanced Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30">
           <div className="flex space-x-3 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 glass-effect">
             {slides.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentSlide(index)}
+                onClick={() => goToSlide(index)}
                 aria-label={`Show slide ${index + 1}`}
+                aria-current={index === currentSlide}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentSlide 
                     ? 'bg-white scale-125 shadow-lg' 
@@ -523,13 +523,13 @@ export default function Home() {
               <span className="font-medium">9 Years of Excellence</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-800">
               Making Environmental <span className="text-green-600">Changes</span> That Matter
             </h2>
             
             <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-green-600 mx-auto mb-8 rounded-full"></div>
             
-            <p className="text-lg text-gray-700 max-w-4xl mx-auto mb-12 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-700 max-w-4xl mx-auto mb-12 leading-relaxed">
              Eco Pak Services group was established during the year 2015. The group has been providing different environmental services like Environmental approvals, Environmental Impact Assessment (EIA), Initial Environmental Examination (IEE), analytical monitoring, wastewater treatment systems installation, air emission control devices and legal services. The company also deals in import and manufacturing of different industrial and laboratory equipments.
             </p>
             
@@ -547,7 +547,7 @@ export default function Home() {
       {/* Stats Section */}
       <section className="py-16 bg-gradient-to-r from-green-600 via-green-700 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, index) => (
               <div
                 key={index}
@@ -561,8 +561,8 @@ export default function Home() {
                 <div className="flex justify-center mb-4 text-green-200">
                   {stat.icon}
                 </div>
-                <div className="text-4xl font-bold mb-2">{stat.number}</div>
-                <div className="text-lg opacity-90">{stat.label}</div>
+                <div className="text-3xl sm:text-4xl font-bold mb-2">{stat.number}</div>
+                <div className="text-sm sm:text-lg opacity-90">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -710,12 +710,12 @@ export default function Home() {
             }`}
           >
             <h2 className="text-4xl font-bold mb-6">Environmental Excellence</h2>
-            <p className="text-xl opacity-90 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl opacity-90 max-w-3xl mx-auto">
               Being eco-friendly today is becoming more and more important. And it goes far beyond just turning off the light when you're out of home or separating your garbage for recycling. It's your lifestyle!
             </p>
           </div>
           
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {[
               { icon: <Recycle className="w-10 h-10" />, percentage: "98%", label: "Recycling Efficiency" },
               { icon: <Droplets className="w-10 h-10" />, percentage: "85%", label: "Water Treatment" },
@@ -785,7 +785,7 @@ export default function Home() {
             id="cta-content"
             className={`${isVisible['cta-content'] ? 'animate-fadeInUp' : 'opacity-0'}`}
           >
-            <h2 className="text-4xl font-bold mb-6">Ready to Start Your Environmental Project?</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Ready to Start Your Environmental Project?</h2>
             <p className="text-xl mb-8 opacity-90">
               Contact us today for professional environmental solutions tailored to your needs.
             </p>
