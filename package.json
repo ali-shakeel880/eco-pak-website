@@ -1,13 +1,14 @@
 {
-  "name": "unicored-tech",
+  "name": "eco-pak-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:spa": "vite build"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",

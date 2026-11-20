@@ -1,3 +1,4 @@
+import RelatedAndFaq from './RelatedAndFaq';
 import { useState } from 'react';
 import { Wind, Factory, Car, Cloud, Volume2, Droplets, FlaskConical, Shield, Wrench } from 'lucide-react';
 import { Link } from 'react-router-dom'; 
@@ -221,7 +222,7 @@ export default function EnvironmentalLaboratory() {
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold text-green-600 mb-4">Environmental Laboratory Services</h1>
+        <h1 className="text-5xl font-bold text-green-600 mb-4">Environmental Laboratory Services in Lahore</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Comprehensive environmental testing and monitoring services with state-of-the-art equipment and expert analysis
         </p>
@@ -463,6 +464,7 @@ export default function EnvironmentalLaboratory() {
     Contact Us Today
   </Link>
 </div>
+      <RelatedAndFaq path="/services/environmental-laboratory" links={[{ label: 'Water & Wastewater Testing', path: '/services/water-wastewater-testing' }, { label: 'Air Quality & Stack Emission Testing', path: '/services/air-quality-stack-emission-testing' }, { label: 'EIA, IEE & Environmental Approval', path: '/services/eia-iee-environmental-approval' }]} />
     </div>
   );
 }

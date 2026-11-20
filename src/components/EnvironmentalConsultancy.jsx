@@ -1,3 +1,4 @@
+import RelatedAndFaq from './RelatedAndFaq';
 import { useState } from 'react';
 import { FileText, Droplets, Zap, ClipboardCheck, Recycle, Building, Users, Globe, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -178,7 +179,7 @@ export default function EnvironmentalConsultancy() {
     <div className="max-w-7xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold text-green-600 mb-4">Environmental Consultancy</h1>
+        <h1 className="text-5xl font-bold text-green-600 mb-4">Environmental Consultancy in Lahore, Pakistan</h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Professional environmental consulting services compliant with Pakistani and international standards
         </p>
@@ -442,6 +443,7 @@ export default function EnvironmentalConsultancy() {
     Schedule Consultation
   </Link>
 </div>
+      <RelatedAndFaq path="/services/environmental-consultancy" links={[{ label: 'EIA, IEE & Environmental Approval', path: '/services/eia-iee-environmental-approval' }, { label: 'Environmental Laboratory Testing', path: '/services/environmental-laboratory' }, { label: 'Techno-Legal Services', path: '/services/techno-legal' }]} />
     </div>
   );
 }

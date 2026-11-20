@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Phone, Mail, Menu, X, Leaf } from 'lucide-react';
 import DropdownMenu from './DropdownMenu';
+import { SITE } from '../seo/site.js';
+import { trackEvent } from '../seo/analytics.js';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +19,7 @@ export default function Navigation() {
   }, []);
 
   const aboutUsItems = [
+    { label: 'About Eco Pak Services', to: '/about-eco-pak-services' },
     { label: 'CEO Message', path: 'ceo-message' },
     { label: 'Code of Conduct', path: 'code-of-conduct' },
     { label: 'Our Team', path: 'our-team' },
@@ -26,10 +29,14 @@ export default function Navigation() {
 
   const servicesItems = [
     { label: 'Environmental Laboratory Services', path: 'environmental-laboratory' },
+    { label: 'Water & Wastewater Testing', path: 'water-wastewater-testing' },
+    { label: 'Air Quality & Stack Emission Testing', path: 'air-quality-stack-emission-testing' },
     { label: 'Environmental Consultancy', path: 'environmental-consultancy' },
+    { label: 'EIA, IEE & Environmental Approval', path: 'eia-iee-environmental-approval' },
     { label: 'Techno-Legal Services', path: 'techno-legal' },
     { label: 'Research Institute', path: 'research-institute' },
     { label: 'Design & Treatment Services', path: 'design-treatment' },
+    { label: 'Wastewater Treatment Plants (ETP)', path: 'wastewater-treatment-plant' },
     { label: 'Carbon Footprint', path: 'carbon-footprint' }
   ];
 
@@ -44,18 +51,16 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center text-sm">
             <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span>+92 300 1050996</span>
-              </div>
-                <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span>+92 300 1050977</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="h-4 w-4" />
-                <span>info@ecopakservices.com</span>
-              </div>
+              {SITE.phones.map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`} onClick={() => trackEvent('phone_click', { location: 'topbar' })} className="flex items-center space-x-2 hover:text-green-200">
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  <span>{p.display}</span>
+                </a>
+              ))}
+              <a href={`mailto:${SITE.email}`} onClick={() => trackEvent('email_click', { location: 'topbar' })} className="flex items-center space-x-2 hover:text-green-200">
+                <Mail className="h-4 w-4" aria-hidden="true" />
+                <span>{SITE.email}</span>
+              </a>
             </div>
             <div className="text-green-200">
               Leading Environmental Solutions Provider
@@ -76,7 +81,9 @@ export default function Navigation() {
 <Link to="/" className="group block rounded-xl overflow-hidden shadow-md   h-[50px]  lg:w-[130px]" >
   <img
     src="/logooo.jpeg" 
-    alt="Eco Pak Logo"
+    alt="Eco Pak Services logo"
+    width="150"
+    height="53"
     className="h-[49px] w-30 lg:h-[53px] lg:w-[150px] object-contain group-hover:scale-105 transition-transform duration-300"
   />
 </Link>
@@ -155,20 +162,16 @@ export default function Navigation() {
             <div className="px-4 py-2 space-y-1">
               {/* Mobile Contact Info */}
               <div className="border-b border-green-600 pb-3 mb-3">
-                <div className="flex items-center space-x-2 text-green-100 text-sm mb-2">
-                  <Phone className="h-4 w-4" />
-                  <span>+92 300 1050996</span>
-                  
-                </div>
-                 <div className="flex items-center space-x-2 text-green-100 text-sm mb-2">
-                  <Phone className="h-4 w-4" />
-                  <span>+92 300 1050997</span>
-                  
-                </div>
-                <div className="flex items-center space-x-2 text-green-100 text-sm">
-                  <Mail className="h-4 w-4" />
-                  <span>info@ecopakservices.pk</span>
-                </div>
+                {SITE.phones.map((p) => (
+                  <a key={p.tel} href={`tel:${p.tel}`} onClick={() => trackEvent('phone_click', { location: 'mobile_menu' })} className="flex items-center space-x-2 text-green-100 text-sm mb-2">
+                    <Phone className="h-4 w-4" aria-hidden="true" />
+                    <span>{p.display}</span>
+                  </a>
+                ))}
+                <a href={`mailto:${SITE.email}`} className="flex items-center space-x-2 text-green-100 text-sm">
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  <span>{SITE.email}</span>
+                </a>
               </div>
 
               <Link 
@@ -186,8 +189,8 @@ export default function Navigation() {
                 </div>
                 {aboutUsItems.map((item) => (
                   <Link
-                    key={item.path}
-                    to={`/about/${item.path}`}
+                    key={item.label}
+                    to={item.to || `/about/${item.path}`}
                     className="block px-6 py-2 text-green-100 hover:text-white hover:bg-white/10 rounded-lg transition-all text-sm"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -227,22 +230,6 @@ export default function Navigation() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 CLIENTS
-              </Link>
-              
-              <Link 
-                to="/certificates" 
-                className="block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-all font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                CERTIFICATES
-              </Link>
-              
-              <Link 
-                to="/careers" 
-                className="block px-3 py-3 text-white hover:text-green-200 hover:bg-white/10 rounded-lg transition-all font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                CAREERS
               </Link>
               
               <Link 

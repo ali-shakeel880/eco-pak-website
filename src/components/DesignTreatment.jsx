@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import RelatedAndFaq from './RelatedAndFaq';
 import React from 'react';
 import { Droplets, Leaf, Settings, FlaskConical, Recycle, Shield, Zap, TrendingUp } from 'lucide-react';
 
@@ -65,7 +67,7 @@ export default function DesignTreatment() {
             <span className="mx-2">&gt;</span>
             <span>Design & Treatment Services</span>
           </nav>
-          <h1 className="text-5xl font-bold mb-4">Design & Treatment Services</h1>
+          <h1 className="text-5xl font-bold mb-4">Wastewater Treatment Design & Engineering Services</h1>
           <p className="text-xl opacity-90 max-w-3xl">
             Leading Pakistan's environmental solutions with innovative wastewater treatment and sustainable technology
           </p>
@@ -200,6 +202,7 @@ export default function DesignTreatment() {
 
    
       </div>
+      <RelatedAndFaq path="/services/design-treatment" links={[{ label: 'Wastewater Treatment Plants (ETP)', path: '/services/wastewater-treatment-plant' }, { label: 'Water & Wastewater Testing', path: '/services/water-wastewater-testing' }, { label: 'Environmental Consultancy', path: '/services/environmental-consultancy' }]} />
     </div>
   );
 }

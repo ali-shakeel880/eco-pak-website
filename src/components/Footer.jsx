@@ -42,7 +42,11 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-6 text-green-400">Our Services</h4>
             <ul className="space-y-3">
               <li><Link to="/services/environmental-laboratory" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Environmental Laboratory</Link></li>
+              <li><Link to="/services/water-wastewater-testing" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Water &amp; Wastewater Testing</Link></li>
+              <li><Link to="/services/air-quality-stack-emission-testing" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Air Quality &amp; Stack Emission Testing</Link></li>
               <li><Link to="/services/environmental-consultancy" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Environmental Consultancy</Link></li>
+              <li><Link to="/services/eia-iee-environmental-approval" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">EIA, IEE &amp; Environmental Approval</Link></li>
+              <li><Link to="/services/wastewater-treatment-plant" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Wastewater Treatment Plants</Link></li>
               <li><Link to="/services/techno-legal" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Techno-Legal Services</Link></li>
               <li><Link to="/services/research-institute" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Research Institute</Link></li>
               <li><Link to="/services/design-treatment" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Design & Treatment Services</Link></li>
@@ -54,7 +58,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6 text-green-400">Quick Links</h4>
             <ul className="space-y-3">
-              <li><Link to="/about/ceo-message" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">About Us</Link></li>
+              <li><Link to="/about-eco-pak-services" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">About Us</Link></li>
+              <li><Link to="/about/ceo-message" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">CEO Message</Link></li>
               <li><Link to="/about/our-team" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Our Team</Link></li>
               <li><Link to="/projects" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Projects</Link></li>
               <li><Link to="/clients" className="text-gray-300 hover:text-white hover:translate-x-1 transition-all duration-300 block">Clients</Link></li>
@@ -73,7 +78,7 @@ const Footer = () => {
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
                 </svg>
                 <div>
-                  <p className="text-gray-300">info@ecopakservices.com</p>
+                  <a href="mailto:info@ecopakservices.com" className="text-gray-300 hover:underline">info@ecopakservices.com</a>
                   <p className="text-gray-400 text-sm">General Inquiries</p>
                 </div>
               </div>
@@ -166,8 +171,8 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 mb-4 md:mb-0">
-              <p className="text-gray-400 text-sm">
-                &copy; 2024 Eco Pak Services. All rights reserved.
+              <p className="text-gray-400 text-sm" suppressHydrationWarning>
+                &copy; 2015&ndash;{new Date().getFullYear()} Eco Pak Services. All rights reserved.
               </p>
               {/* <div className="flex space-x-4">
                 <Link to="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</Link>

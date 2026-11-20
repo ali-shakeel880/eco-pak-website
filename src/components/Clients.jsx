@@ -117,7 +117,7 @@ export default function Clients() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-white">
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-10px); }
           to { opacity: 1; transform: translateY(0); }
@@ -128,10 +128,10 @@ export default function Clients() {
       <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-5xl font-bold mb-4">
+            <p className="text-5xl font-bold mb-4">
              Eco Pak Services
-            </h1>
-            <h2 className="text-3xl font-light mb-6">Our Valued Clients</h2>
+            </p>
+            <h1 className="text-3xl font-light mb-6">Our Valued Clients</h1>
             <p className="text-xl opacity-90 max-w-3xl mx-auto">
               Trusted by leading companies across diverse industries for comprehensive environmental solutions and sustainable engineering practices
             </p>

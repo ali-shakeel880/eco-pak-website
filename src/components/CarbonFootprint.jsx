@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import RelatedAndFaq from './RelatedAndFaq';
 import React from 'react';
 import { Leaf, BarChart3, Factory, Globe, Target, Users, Heart, GraduationCap, Droplets, Building } from 'lucide-react';
 
@@ -74,7 +76,7 @@ export default function CarbonFootprint() {
       <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-16">
         <div className="max-w-6xl mx-auto px-4">
           
-          <h1 className="text-5xl font-bold mb-4">Carbon Footprint Services</h1>
+          <h1 className="text-5xl font-bold mb-4">Carbon Footprint Assessment Services</h1>
           <p className="text-xl opacity-90 max-w-3xl">
             Comprehensive carbon footprint assessment and sustainable solutions for environmental compliance and business optimization
           </p>
@@ -211,6 +213,7 @@ export default function CarbonFootprint() {
           </div>
         </div>
       </div>
+      <RelatedAndFaq path="/services/carbon-footprint" links={[{ label: 'Air Quality & Stack Emission Testing', path: '/services/air-quality-stack-emission-testing' }, { label: 'Environmental Consultancy', path: '/services/environmental-consultancy' }, { label: 'Research Institute', path: '/services/research-institute' }]} />
     </div>
   );
 }

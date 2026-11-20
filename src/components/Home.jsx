@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ChevronRight, Phone, Mail, Facebook, Linkedin, Instagram, CheckCircle, Award, Users, Clock, Leaf, Droplets, Recycle, Sun, ArrowRight, Calendar, Eye, Target, Shield, Globe, Beaker, FileText, Cog, TreePine, Calculator } from 'lucide-react';
 
 import { Link } from 'react-router-dom';
+import FaqSection from './FaqSection';
+import { FAQS } from '../content/faqs.js';
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -39,7 +41,7 @@ export default function Home() {
     {
       icon: <Beaker className="w-12 h-12" />,
       title: "Environmental Laboratory Services",
-      description: "Eco Pak Services Research Institute had been established in 2025 under the section 42, Therefore the purpose of establishment was Research and development for sustainability…",
+      description: "Ambient air, stack emission, noise, drinking water, wastewater and industrial hygiene monitoring from our Lahore environmental laboratory, reported against applicable quality standards…",
       image: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
       link: "/services/environmental-laboratory"
     },
@@ -153,7 +155,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <style jsx>{`
+      <style>{`
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -426,20 +428,23 @@ export default function Home() {
                 <Leaf className="w-5 h-5 text-green-400 mr-2" />
                 <span className="text-sm font-medium text-white/90">Environmental Excellence Since 2015</span>
               </div>
+              <h1 className="mt-6 text-base md:text-lg font-medium text-green-100 tracking-wide">
+                Environmental Testing Laboratory &amp; Consultancy in Lahore, Pakistan
+              </h1>
             </div>
             
             {/* Dynamic slide content with enhanced animations */}
             <div className={`slide-content-wrapper ${isSlideChanging ? 'slide-changing' : 'slide-active'}`}>
               <div className="text-white">
                 {/* Main Title */}
-                <h1 className="text-5xl md:text-7xl font-bold mb-4 text-shadow leading-tight animate-slideInFromTop">
+                <p className="text-5xl md:text-7xl font-bold mb-4 text-shadow leading-tight animate-slideInFromTop">
                   {slides[currentSlide].title}
-                </h1>
+                </p>
                 
                 {/* Subtitle */}
-                <h2 className="text-xl md:text-2xl font-light mb-6 text-green-100 opacity-90 animate-slideInFromLeft" style={{ animationDelay: '0.2s' }}>
+                <p className="text-xl md:text-2xl font-light mb-6 text-green-100 opacity-90 animate-slideInFromLeft" style={{ animationDelay: '0.2s' }}>
                   {slides[currentSlide].subtitle}
-                </h2>
+                </p>
                 
                 {/* Description */}
                 <p className="text-lg md:text-xl mb-10 opacity-90 max-w-4xl mx-auto leading-relaxed text-white/90 animate-slideInFromRight" style={{ animationDelay: '0.4s' }}>
@@ -491,6 +496,7 @@ export default function Home() {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
+                aria-label={`Show slide ${index + 1}`}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentSlide 
                     ? 'bg-white scale-125 shadow-lg' 
@@ -528,7 +534,7 @@ export default function Home() {
             </p>
             
           <Link
-  to="/about/code-of-conduct"
+  to="/about-eco-pak-services"
   className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
 >
   Learn More About Us
@@ -628,6 +634,10 @@ export default function Home() {
                 <img
                   src={service.image}
                   alt={service.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="500"
                   className="w-full h-64 sm:h-72 md:h-80 object-cover hover:scale-110 transition-transform duration-700"
                 />
               </div>
@@ -732,12 +742,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Specialised services (internal links to landing pages) */}
+      <section className="py-16 bg-gray-50" aria-labelledby="popular-services">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 id="popular-services" className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">
+            Popular <span className="text-green-600">Testing &amp; Compliance Services</span>
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { to: '/services/water-wastewater-testing', title: 'Water & Wastewater Testing', text: 'Drinking water and industrial effluent analysis in Lahore.' },
+              { to: '/services/air-quality-stack-emission-testing', title: 'Air Quality & Stack Emission Testing', text: 'Ambient air, stack, noise and workplace monitoring.' },
+              { to: '/services/eia-iee-environmental-approval', title: 'EIA, IEE & Environmental Approval', text: 'Studies and EPA approvals for projects in Punjab.' },
+              { to: '/services/wastewater-treatment-plant', title: 'Wastewater Treatment Plants (ETP)', text: 'Design and upgrades of effluent treatment systems.' },
+            ].map((s) => (
+              <Link key={s.to} to={s.to} className="group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:border-green-300 transition-all">
+                <h3 className="text-lg font-bold text-gray-800 group-hover:text-green-700 mb-2">{s.title}</h3>
+                <p className="text-gray-600 text-sm mb-4">{s.text}</p>
+                <span className="inline-flex items-center text-green-700 font-semibold text-sm">Learn more <ArrowRight className="ml-1 w-4 h-4" /></span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FaqSection faqs={FAQS.home} />
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-green-700 to-green-500 text-white relative overflow-hidden" id="contact">
         <div className="absolute inset-0 opacity-10">
           <img
             src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-            alt="Forest background"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         </div>
