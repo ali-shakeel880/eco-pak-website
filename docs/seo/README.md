@@ -48,3 +48,19 @@
 - [ ] AI crawler policy (default: allow all)
 - [ ] Confirm the legal name "Eco Pak Services (Pvt.) Ltd." and the social profile URLs (`src/seo/site.js`)
 - [ ] Confirm whether you offer soil testing, ZDHC, ESG, cleanroom validation or RO systems (pages only if you do)
+
+## CI/CD (GitHub Actions → Hostinger)
+Workflow: `.github/workflows/deploy.yml`
+
+| Job | Runs on | What it does |
+|---|---|---|
+| **Build & verify** | every push and PR | `npm ci` → `npm run build` (Vite + prerender) → `scripts/check-dist.mjs` fails the run if any sitemap page is missing, empty or lacks title/description/canonical/H1/JSON-LD |
+| **Deploy to Hostinger** | push to `main` or manual "Run workflow" | uploads the *verified* `dist/` artifact over FTP (changed files only) |
+| **Smoke test** | after deploy | `scripts/smoke-test.sh` checks the live site: 200s, a real 404, HTTPS/www/trailing-slash 301s, and no redirect loop |
+
+**One-time setup (GitHub → Settings → Secrets and variables → Actions):**
+- Secrets (already used before): `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` (hPanel → Files → FTP Accounts)
+- Optional variable: `VITE_GA4_ID` (turns on GA4)
+- Optional: Settings → Environments → `production` → add required reviewers to approve each deploy manually
+
+Run the smoke test any time: `bash scripts/smoke-test.sh https://ecopakservices.com`
