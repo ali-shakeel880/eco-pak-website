@@ -15,7 +15,9 @@ check() { # url expected_status [must_contain]
     echo "✗ $url → $code (expected $want)"; fail=1; return
   fi
   if [[ -n "$needle" ]] && ! grep -q "$needle" /tmp/smoke_body; then
-    echo "✗ $url → $code but missing \"$needle\""; fail=1; return
+    echo "✗ $url → $code but missing \"$needle\". First lines received:"
+    head -c 600 /tmp/smoke_body | sed 's/^/      | /'; echo
+    fail=1; return
   fi
   echo "✓ $url → $code"
 }
@@ -31,7 +33,7 @@ check "$BASE/services/environmental-laboratory" 200 'application/ld+json'
 check "$BASE/services/water-wastewater-testing" 200 '<h1'
 check "$BASE/contact" 200 '<title>Contact Eco Pak Services'
 check "$BASE/sitemap.xml" 200 '<urlset'
-check "$BASE/robots.txt" 200 'Sitemap:'
+check "$BASE/robots.txt" 200 'Sitemap: https://ecopakservices.com/sitemap.xml'
 check "$BASE/this-page-should-not-exist-$RANDOM" 404 'noindex'
 check_redirect "$BASE/contact/" "$BASE/contact"
 check_redirect "https://www.$HOST/contact" "$BASE/contact"
